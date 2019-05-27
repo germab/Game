@@ -1,15 +1,20 @@
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.SplitPane;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,52 +26,70 @@ import javax.swing.JPanel;
  *
  * @author Matthias
  */
-public class Board extends JPanel{
-    private Image img;
+public class Board extends JPanel implements ActionListener{
     
-    
-    public Board(){
+    private Timer timer;
+    private Character spaceShip;
+    private final int DELAY = 10;
+
+    public Board() {
+
         initBoard();
     }
-    
-    public void initBoard(){
-        loadImage();
+
+    private void initBoard() {
+
+        addKeyListener(new TAdapter());
+        setBackground(Color.black);
+        setFocusable(true);
         
-        int w = img.getWidth(this);
-        int h = img.getHeight(this);
-        setPreferredSize(new Dimension(w,h));
+        spaceShip = new Character();
+
+        timer = new Timer(DELAY, this);
+        timer.start();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        doDrawing(g);
+        
+        Toolkit.getDefaultToolkit().sync();
     }
     
-    private void loadImage(){
-        ImageIcon ii = new ImageIcon("./star.png");
-        img = ii.getImage();
-    }
-    
-    public void paintComponent(Graphics g){
-        g.drawImage(img, 0, 0, null);
-    }
-    
-    public void drawTest(Graphics g){
+    private void doDrawing(Graphics g) {
+        
         Graphics2D g2d = (Graphics2D) g;
+
+        g2d.drawImage(spaceShip.getImg(), spaceShip.getX(), 
+            spaceShip.getY(), this);
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
         
-        RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        step();
+    }
+    
+    private void step() {
         
-        rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        spaceShip.move();
         
-       g2d.setRenderingHints(rh);
-       
-       Dimension size = getSize();
-       double w = size.getWidth();
-       double h = size.getHeight();
-       
-       Ellipse2D e = new Ellipse2D.Double(0,0,80,130);
-       g2d.setStroke(new BasicStroke(1));
-       g2d.setColor(Color.red);
-       
-       for(double deg = 0; deg < 360; deg += 5){
-           AffineTransform at = AffineTransform.getTranslateInstance(w/2, h/2);
-           at.rotate(Math.toRadians(deg));
-           g2d.draw(at.createTransformedShape(e));
-       }
+        repaint(spaceShip.getX()-1, spaceShip.getY()-1, 
+                spaceShip.getWidth()+2, spaceShip.getHeight()+2);     
+    }    
+
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            spaceShip.keyReleased(e);
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            spaceShip.keyPressed(e);
+        }
     }
 }

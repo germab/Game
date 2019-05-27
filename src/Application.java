@@ -20,8 +20,8 @@ public class Application extends JFrame{
     
     public void initUI(){
         add(new Board());
-        setSize(250,200);
-        
+        setResizable(false);
+        setSize(400,300);
         setTitle("Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
