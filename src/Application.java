@@ -12,7 +12,7 @@ import javax.swing.JFrame;
  *
  * @author Matthias
  */
-public class Application extends JFrame{
+public class Application extends JFrame implements Commons{
 
     public Application() {
         initUI();
@@ -21,8 +21,8 @@ public class Application extends JFrame{
     public void initUI(){
         add(new Board());
         setResizable(false);
-        setSize(400,300);
-        setTitle("Game");
+        setSize(BOARD_WIDTH,BOARD_HEIGHT);
+        setTitle("Space Invaders");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }

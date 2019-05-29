@@ -13,73 +13,69 @@ import javax.swing.ImageIcon;
  *
  * @author Matthias
  */
-public class Character {
-    private int dx;
-    private int dy;
-    private int x = 40;
-    private int y = 60;
-    private int w,h;
-    private Image img;
-    
-    public Character(){
-        loadImage();
-    }
-    
-    private void loadImage(){
-        ImageIcon ii = new ImageIcon("./craft.png");
-        img = ii.getImage();
-        w = img.getWidth(null);
-        h = img.getHeight(null);
-    }
-    
-    public void move(){
-        x+=dx;
-        y+=dy;
+public class Character extends Sprite implements Commons{
+    private final int START_Y = 280;
+    private final int START_X = 270;
+
+    private final String playerImg = "./player.png";
+    private int width;
+
+    public Character() {
+
+        initCharacter();
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return w;
-    }
-
-    public int getHeight() {
-        return h;
-    }
-
-    public Image getImg() {
-        return img;
-    }
-    
-    public void keyPressed(KeyEvent e){
-        int key = e.getKeyCode();
+    private void initCharacter() {
         
-        if(key == KeyEvent.VK_LEFT)
+        ImageIcon ii = new ImageIcon(playerImg);
+
+        width = ii.getImage().getWidth(null);
+
+        setImage(ii.getImage());
+        setX(START_X);
+        setY(START_Y);
+    }
+
+    public void act() {
+        
+        x += dx;
+        
+        if (x <= 2) {
+            x = 2;
+        }
+        
+        if (x >= BOARD_WIDTH - 2 * width) {
+            x = BOARD_WIDTH - 2 * width;
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+        
             dx = -2;
-        if(key == KeyEvent.VK_RIGHT)
-            dx = 2;
-        if(key == KeyEvent.VK_UP)
-            dy = -2;
-        if(key == KeyEvent.VK_DOWN)
-            dy = 2;
-    }
-    
-    public void keyReleased(KeyEvent e){
-        int key = e.getKeyCode();
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
         
-        if(key == KeyEvent.VK_LEFT)
+            dx = 2;
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+        
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+        
             dx = 0;
-        if(key == KeyEvent.VK_RIGHT)
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+        
             dx = 0;
-        if(key == KeyEvent.VK_UP)
-            dy = 0;
-        if(key == KeyEvent.VK_DOWN)
-            dy = 0;
+        }
     }
 }
