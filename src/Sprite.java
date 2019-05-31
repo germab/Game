@@ -8,7 +8,7 @@ import java.awt.Image;
  */
 
 /**
- *
+ * Super Class for all Characters and Sprites
  * @author Matthias
  */
 public class Sprite {

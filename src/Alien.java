@@ -8,11 +8,10 @@ import javax.swing.ImageIcon;
  */
 
 /**
- *
+ * Initializes Alien Characters
  * @author Matthias
  */
 public class Alien extends Sprite{
-    //private Bomb bomb;
     private final String alienImg = "./alien.png";
 
     public Alien(int x, int y) {
@@ -20,12 +19,16 @@ public class Alien extends Sprite{
         initAlien(x, y);
     }
 
+    /**
+     * Initializes Alien and sets it to the correct Coordinates
+     * @param x
+     * @param y 
+     */
     private void initAlien(int x, int y) {
 
         this.x = x;
         this.y = y;
 
-        //bomb = new Bomb(x, y);
         ImageIcon ii = new ImageIcon(alienImg);
         setImage(ii.getImage());
     }

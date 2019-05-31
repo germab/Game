@@ -36,6 +36,9 @@ public class Character extends Sprite implements Commons{
         setY(START_Y);
     }
 
+    /**
+     * moves the character and stops at the border
+     */
     public void act() {
         
         x += dx;
@@ -49,6 +52,10 @@ public class Character extends Sprite implements Commons{
         }
     }
 
+    /**
+     * sets the value to dx to move in the right direction
+     * @param e 
+     */
     public void keyPressed(KeyEvent e) {
         
         int key = e.getKeyCode();
@@ -64,6 +71,10 @@ public class Character extends Sprite implements Commons{
         }
     }
 
+    /**
+     * character stops when key is released
+     * @param e 
+     */
     public void keyReleased(KeyEvent e) {
         
         int key = e.getKeyCode();

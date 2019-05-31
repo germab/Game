@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
  */
 
 /**
- *
+ * Initializes the Shots
  * @author Matthias
  */
 public class Shot extends Sprite {
@@ -18,6 +18,7 @@ public class Shot extends Sprite {
     private final int V_SPACE = 1;
 
     public Shot() {
+        
     }
 
     public Shot(int x, int y) {
@@ -25,6 +26,11 @@ public class Shot extends Sprite {
         initShot(x, y);
     }
 
+    /**
+     * Initializes shot and sets it to the right coordinates
+     * @param x
+     * @param y 
+     */
     private void initShot(int x, int y) {
 
         ImageIcon ii = new ImageIcon(shotImg);
